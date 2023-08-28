@@ -5,6 +5,11 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](http://keepachangelog.com/en/1.0.0/)
 and this project adheres to [Semantic Versioning](http://semver.org/spec/v2.0.0.html).
 
+## 2.0.2
+
+- allow uncontrolled date range picker with internal state
+- set zIndex to avoid clipping
+
 ## 2.0.1
 
 - do not crash if no onChange event handler is submitted to date range picker

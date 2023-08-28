@@ -23,6 +23,11 @@ const DateRangePicker = props => {
   const dateRangeRef = (0, _react.useRef)();
   const [referenceElement, setReferenceElement] = (0, _react.useState)(null);
   const [popperElement, setPopperElement] = (0, _react.useState)(null);
+  const [state, setState] = (0, _react.useState)([{
+    startDate: undefined,
+    endDate: undefined,
+    key: 'selection'
+  }]);
   const clickTrackRef = (0, _utils.useClickOutside)(() => {
     setIsOpen(false);
   });
@@ -31,7 +36,11 @@ const DateRangePicker = props => {
     attributes
   } = (0, _reactPopper.usePopper)(referenceElement, popperElement, {
     placement: 'left-start',
-    modifiers: []
+    strategy: 'fixed',
+    modifiers: [{
+      name: 'flip',
+      enabled: false
+    }]
   });
   return /*#__PURE__*/_react.default.createElement("div", {
     ref: clickTrackRef
@@ -39,7 +48,10 @@ const DateRangePicker = props => {
     className: (0, _classnames.default)(stylesRef.current.dateRangePickerWrapper, props.className)
   }, isOpen && /*#__PURE__*/_react.default.createElement("div", _extends({
     ref: setPopperElement,
-    style: styles.popper
+    style: {
+      ...styles.popper,
+      zIndex: 100
+    }
   }, attributes.popper), /*#__PURE__*/_react.default.createElement(_DefinedRange.default, _extends({
     focusedRange: focusedRange,
     onPreviewChange: value => {
@@ -52,7 +64,12 @@ const DateRangePicker = props => {
     onRangeFocusChange: focusedRange => setFocusedRange(focusedRange),
     focusedRange: focusedRange,
     editableDateInputs: true,
-    className: undefined
+    className: undefined,
+    onChange: item => {
+      setState([item.selection]);
+      props.onChange && props.onChange(item);
+    },
+    ranges: state
   }, props, {
     isOpen: isOpen,
     onVisibilityChange: visible => {
