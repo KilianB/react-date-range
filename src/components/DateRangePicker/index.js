@@ -50,12 +50,12 @@ const DateRangePicker = (props) => {
       <DateRange
         onRangeFocusChange={focusedRange => setFocusedRange(focusedRange)}
         focusedRange={focusedRange}
+        editableDateInputs={true}
+        className={undefined}
         {...props}
         onVisibilityChange={visible => setIsOpen(visible)}
-        editableDateInputs={true}
         ref={dateRangeRef}
         inputRef={setReferenceElement}
-        className={undefined}
       />
       </div>
     </div>
