@@ -1,6 +1,6 @@
 {
   "name": "react-date-range",
-  "version": "1.4.0",
+  "version": "2.0.0",
   "description": "A React component for choosing dates and date ranges.",
   "main": "dist/index.js",
   "scripts": {
@@ -8,7 +8,7 @@
     "build": "yarn build:css & yarn build:js & styleguidist build",
     "build:css": "postcss src/styles.scss -d dist --ext css & postcss src/theme/*.scss -d dist/theme --ext css",
     "build:js": "babel ./src --out-dir ./dist --ignore test.js",
-    "lint": "eslint 'src/**/*.js'",
+    "lint": "eslint src/**/*.js",
     "test": "jest",
     "preversion": "yarn clear & yarn build"
   },
@@ -20,6 +20,7 @@
     "rangepicker"
   ],
   "contributors": [
+    "Kilian Brachtendorf <kilian@brachtendorf.dev> (https://github.com/KilianB)",
     "Burak Can <neoberg@gmail.com> (https://github.com/burakcan)",
     "Mehmet Kamil Morcay <mehmetmorcay@gmail.com> (https://github.com/mkg0)",
     "Kamyar Ghasemlou <github@kamy.me> (https://github.com/kamyar)",
