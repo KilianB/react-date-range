@@ -19,7 +19,6 @@ class DateInput extends PureComponent {
 
   componentDidUpdate(prevProps) {
     const { value } = prevProps;
-
     if (!isEqual(value, this.props.value)) {
       this.setState({ value: this.formatDate(this.props) });
     }
@@ -36,7 +35,6 @@ class DateInput extends PureComponent {
         return format(value, dateDisplayFormat, dateOptions);
       }
     }
-
     return '';
   }
 

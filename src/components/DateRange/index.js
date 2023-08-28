@@ -162,6 +162,9 @@ DateRange.propTypes = {
   ranges: PropTypes.arrayOf(rangeShape),
   moveRangeOnFirstSelection: PropTypes.bool,
   retainEndDateOnFirstSelection: PropTypes.bool,
+  isOpen: PropTypes.bool,
+  onVisibilityChange: PropTypes.func,
+  inputRef: PropTypes.func
 };
 
 export default DateRange;

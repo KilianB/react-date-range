@@ -1,44 +1,66 @@
-import React, { Component } from 'react';
+import React, { Component, useRef, useState } from 'react';
 import PropTypes from 'prop-types';
 import DateRange from '../DateRange';
 import DefinedRange from '../DefinedRange';
 import { findNextRangeIndex, generateStyles } from '../../utils';
 import classnames from 'classnames';
 import coreStyles from '../../styles';
+import { usePopper } from 'react-popper';
 
-class DateRangePicker extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      focusedRange: [findNextRangeIndex(props.ranges), 0],
-    };
-    this.styles = generateStyles([coreStyles, props.classNames]);
-  }
-  render() {
-    const { focusedRange } = this.state;
-    return (
-      <div className={classnames(this.styles.dateRangePickerWrapper, this.props.className)}>
-        <DefinedRange
-          focusedRange={focusedRange}
-          onPreviewChange={value =>
-            this.dateRange.updatePreview(
-              value ? this.dateRange.calcNewSelection(value, typeof value === 'string') : null
-            )
-          }
-          {...this.props}
-          range={this.props.ranges[focusedRange[0]]}
-          className={undefined}
-        />
-        <DateRange
-          onRangeFocusChange={focusedRange => this.setState({ focusedRange })}
-          focusedRange={focusedRange}
-          {...this.props}
-          ref={t => (this.dateRange = t)}
-          className={undefined}
-        />
+
+const DateRangePicker = (props) => {
+    
+  const [focusedRange, setFocusedRange] = useState([findNextRangeIndex(props.ranges), 0]);
+  const [isOpen, setIsOpen] = useState(false);
+
+  const stylesRef = useRef(generateStyles([coreStyles, props.classNames]));
+  const dateRangeRef = useRef();
+
+  const [referenceElement, setReferenceElement] = useState(null);
+  const [popperElement, setPopperElement] = useState(null);
+
+  const { styles, attributes }  = usePopper(referenceElement, popperElement,{
+    placement:'left-start',
+    modifiers: [],
+  });
+
+
+  return (
+    <div className={classnames(stylesRef.current.dateRangePickerWrapper, props.className)}>
+
+      {isOpen && <div ref={setPopperElement} style={styles.popper} {...attributes.popper}>
+
+    
+      <DefinedRange
+        focusedRange={focusedRange}
+        onPreviewChange={value =>{
+          dateRangeRef.current.updatePreview(
+            value ? dateRangeRef.current.calcNewSelection(value, typeof value === 'string') : null
+          )
+        }
+          
+        }
+        {...props}
+        range={props.ranges[focusedRange[0]]}
+        className={undefined}
+  
+      />
+          </div>}
+      <div>
+      <DateRange
+        onRangeFocusChange={focusedRange => setFocusedRange(focusedRange)}
+        focusedRange={focusedRange}
+        {...props}
+        onVisibilityChange={visible => setIsOpen(visible)}
+        editableDateInputs={true}
+        ref={dateRangeRef}
+        inputRef={setReferenceElement}
+        className={undefined}
+      />
       </div>
-    );
-  }
+    </div>
+  );
+
 }
 
 DateRangePicker.defaultProps = {};
