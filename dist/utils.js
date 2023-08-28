@@ -7,7 +7,9 @@ exports.calcFocusDate = calcFocusDate;
 exports.findNextRangeIndex = findNextRangeIndex;
 exports.generateStyles = generateStyles;
 exports.getMonthDisplayRange = getMonthDisplayRange;
+exports.useClickOutside = useClickOutside;
 var _classnames = _interopRequireDefault(require("classnames"));
+var _react = _interopRequireDefault(require("react"));
 var _addDays = _interopRequireDefault(require("date-fns/addDays"));
 var _differenceInCalendarMonths = _interopRequireDefault(require("date-fns/differenceInCalendarMonths"));
 var _differenceInCalendarDays = _interopRequireDefault(require("date-fns/differenceInCalendarDays"));
@@ -84,4 +86,26 @@ function generateStyles(sources) {
     return styles;
   }, {});
   return generatedStyles;
+}
+function useClickOutside(cb) {
+  const ref = _react.default.useRef(null);
+  const refCb = _react.default.useRef(cb);
+  _react.default.useLayoutEffect(() => {
+    refCb.current = cb;
+  });
+  _react.default.useEffect(() => {
+    const handler = e => {
+      const element = ref.current;
+      if (element && !element.contains(e.target)) {
+        refCb.current(e);
+      }
+    };
+    document.addEventListener('mousedown', handler);
+    document.addEventListener('touchstart', handler);
+    return () => {
+      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('touchstart', handler);
+    };
+  }, []);
+  return ref;
 }

@@ -114,7 +114,7 @@ class DateRange extends _react.Component {
       const focusedRange = this.props.focusedRange || this.state.focusedRange;
       const focusedRangeIndex = focusedRange[0];
       const selectedRange = ranges[focusedRangeIndex];
-      if (!selectedRange) return;
+      if (!selectedRange || !onChange) return;
       const newSelection = this.calcNewSelection(value, isSingleValue);
       onChange({
         [selectedRange.key || `range${focusedRangeIndex + 1}`]: {

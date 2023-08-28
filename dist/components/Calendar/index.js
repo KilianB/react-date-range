@@ -58,8 +58,8 @@ class Calendar extends _react.PureComponent {
       if (!props.scroll.enabled) {
         if (preventUnnecessary && props.preventSnapRefocus) {
           const focusedDateDiff = (0, _differenceInCalendarMonths.default)(date, _this.state.focusedDate);
-          const isAllowedForward = props.calendarFocus === "forwards" && focusedDateDiff >= 0;
-          const isAllowedBackward = props.calendarFocus === "backwards" && focusedDateDiff <= 0;
+          const isAllowedForward = props.calendarFocus === 'forwards' && focusedDateDiff >= 0;
+          const isAllowedBackward = props.calendarFocus === 'backwards' && focusedDateDiff <= 0;
           if ((isAllowedForward || isAllowedBackward) && Math.abs(focusedDateDiff) < props.months) {
             return;
           }
@@ -104,7 +104,7 @@ class Calendar extends _react.PureComponent {
       });
     });
     _defineProperty(this, "changeShownDate", function (value) {
-      let mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : "set";
+      let mode = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'set';
       const {
         focusedDate
       } = _this.state;
@@ -170,7 +170,7 @@ class Calendar extends _react.PureComponent {
       }, showMonthArrow ? /*#__PURE__*/_react.default.createElement("button", {
         type: "button",
         className: (0, _classnames.default)(styles.nextPrevButton, styles.prevButton),
-        onClick: () => changeShownDate(-1, "monthOffset"),
+        onClick: () => changeShownDate(-1, 'monthOffset'),
         "aria-label": ariaLabels.prevButton
       }, /*#__PURE__*/_react.default.createElement("i", null)) : null, showMonthAndYearPickers ? /*#__PURE__*/_react.default.createElement("span", {
         className: styles.monthAndYearPickers
@@ -178,7 +178,7 @@ class Calendar extends _react.PureComponent {
         className: styles.monthPicker
       }, /*#__PURE__*/_react.default.createElement("select", {
         value: focusedDate.getMonth(),
-        onChange: e => changeShownDate(e.target.value, "setMonth"),
+        onChange: e => changeShownDate(e.target.value, 'setMonth'),
         "aria-label": ariaLabels.monthPicker
       }, this.state.monthNames.map((monthName, i) => /*#__PURE__*/_react.default.createElement("option", {
         key: i,
@@ -189,7 +189,7 @@ class Calendar extends _react.PureComponent {
         className: styles.yearPicker
       }, /*#__PURE__*/_react.default.createElement("select", {
         value: focusedDate.getFullYear(),
-        onChange: e => changeShownDate(e.target.value, "setYear"),
+        onChange: e => changeShownDate(e.target.value, 'setYear'),
         "aria-label": ariaLabels.yearPicker
       }, new Array(upperYearLimit - lowerYearLimit + 1).fill(upperYearLimit).map((val, i) => {
         const year = val - i;
@@ -202,7 +202,7 @@ class Calendar extends _react.PureComponent {
       }, this.state.monthNames[focusedDate.getMonth()], " ", focusedDate.getFullYear()), showMonthArrow ? /*#__PURE__*/_react.default.createElement("button", {
         type: "button",
         className: (0, _classnames.default)(styles.nextPrevButton, styles.nextButton),
-        onClick: () => changeShownDate(+1, "monthOffset"),
+        onClick: () => changeShownDate(+1, 'monthOffset'),
         "aria-label": ariaLabels.nextButton
       }, /*#__PURE__*/_react.default.createElement("i", null)) : null);
     });
@@ -231,8 +231,7 @@ class Calendar extends _react.PureComponent {
           className: styles.dateDisplay,
           key: i,
           style: {
-            color: range.color || defaultColor,
-            minWidth: 400
+            color: range.color || defaultColor
           }
         }, /*#__PURE__*/_react.default.createElement(_DateInput.default, {
           className: (0, _classnames.default)(styles.dateDisplayItem, {
@@ -250,7 +249,7 @@ class Calendar extends _react.PureComponent {
             this.setState({
               isOpen: true
             });
-            if (!this.state.isOpen && onVisibilityChange) {
+            if (onVisibilityChange) {
               onVisibilityChange(true);
             }
             this.handleRangeFocusChange(i, 0);
@@ -317,7 +316,7 @@ class Calendar extends _react.PureComponent {
         }
       }
       if (!dragSelectionEnabled) return;
-      if (displayMode === "date" || !this.state.drag.status) {
+      if (displayMode === 'date' || !this.state.drag.status) {
         onChange && onChange(date);
         return;
       }
@@ -325,7 +324,7 @@ class Calendar extends _react.PureComponent {
         startDate: this.state.drag.range.startDate,
         endDate: date
       };
-      if (displayMode !== "dateRange" || (0, _isSameDay.default)(newRange.startDate, date)) {
+      if (displayMode !== 'dateRange' || (0, _isSameDay.default)(newRange.startDate, date)) {
         this.setState({
           drag: {
             status: false,
@@ -371,7 +370,7 @@ class Calendar extends _react.PureComponent {
         this.listSizeCache = cache;
         if (cache[index]) return cache[index];
       }
-      if (direction === "horizontal") return scrollArea.monthWidth;
+      if (direction === 'horizontal') return scrollArea.monthWidth;
       const monthStep = (0, _addMonths.default)(minDate, index);
       const {
         start,
@@ -415,12 +414,12 @@ class Calendar extends _react.PureComponent {
       enabled: false
     };
     const longMonthHeight = scroll.longMonthHeight || scroll.monthHeight;
-    if (direction === "vertical") {
+    if (direction === 'vertical') {
       return {
         enabled: true,
         monthHeight: scroll.monthHeight || 220,
         longMonthHeight: longMonthHeight || 260,
-        calendarWidth: "auto",
+        calendarWidth: 'auto',
         calendarHeight: (scroll.calendarHeight || longMonthHeight || 240) * months
       };
     }
@@ -440,8 +439,8 @@ class Calendar extends _react.PureComponent {
   }
   componentDidUpdate(prevProps) {
     const propMapper = {
-      dateRange: "ranges",
-      date: "date"
+      dateRange: 'ranges',
+      date: 'date'
     };
     const targetProp = propMapper[this.props.displayMode];
     if (this.props[targetProp] !== prevProps[targetProp]) {
@@ -459,6 +458,11 @@ class Calendar extends _react.PureComponent {
     if (!(0, _shallowEqual.shallowEqualObjects)(prevProps.scroll, this.props.scroll)) {
       this.setState({
         scrollArea: this.calcScrollArea(this.props)
+      });
+    }
+    if (this.state.isOpen !== this.props.isOpen) {
+      this.setState({
+        isOpen: this.props.isOpen
       });
     }
   }
@@ -495,7 +499,7 @@ class Calendar extends _react.PureComponent {
       focusedDate,
       isOpen
     } = this.state;
-    const isVertical = direction === "vertical";
+    const isVertical = direction === 'vertical';
     const monthAndYearRenderer = navigatorRenderer || this.renderMonthAndYear;
     const ranges = this.props.ranges.map((range, i) => ({
       ...range,
@@ -516,13 +520,14 @@ class Calendar extends _react.PureComponent {
             range: {}
           }
         });
-      },
+      }
+    }, /*#__PURE__*/_react.default.createElement("div", null, showDateDisplay && this.renderDateDisplay()), /*#__PURE__*/_react.default.createElement("div", {
       style: {
         position: 'relative'
       }
-    }, /*#__PURE__*/_react.default.createElement("div", null, showDateDisplay && this.renderDateDisplay()), isOpen && /*#__PURE__*/_react.default.createElement("div", {
+    }, isOpen && /*#__PURE__*/_react.default.createElement("div", {
       style: {
-        position: 'relative',
+        position: 'absolute',
         backgroundColor: 'white',
         zIndex: 1000
       }
@@ -540,7 +545,7 @@ class Calendar extends _react.PureComponent {
       type: "variable",
       ref: target => this.list = target,
       itemSizeEstimator: this.estimateMonthSize,
-      axis: isVertical ? "y" : "x",
+      axis: isVertical ? 'y' : 'x',
       itemRenderer: (index, key) => {
         const monthStep = (0, _addMonths.default)(minDate, index);
         return /*#__PURE__*/_react.default.createElement(_Month.default, _extends({}, this.props, {
@@ -572,7 +577,7 @@ class Calendar extends _react.PureComponent {
       className: (0, _classnames.default)(this.styles.months, isVertical ? this.styles.monthsVertical : this.styles.monthsHorizontal)
     }, new Array(this.props.months).fill(null).map((_, i) => {
       let monthStep = (0, _addMonths.default)(this.state.focusedDate, i);
-      if (this.props.calendarFocus === "backwards") {
+      if (this.props.calendarFocus === 'backwards') {
         monthStep = (0, _subMonths.default)(this.state.focusedDate, this.props.months - 1 - i);
       }
       return /*#__PURE__*/_react.default.createElement(_Month.default, _extends({}, this.props, {
@@ -593,7 +598,7 @@ class Calendar extends _react.PureComponent {
         showWeekDays: !isVertical || i === 0,
         showMonthName: !isVertical || i > 0
       }));
-    }))));
+    })))));
   }
 }
 Calendar.defaultProps = {
@@ -605,28 +610,28 @@ Calendar.defaultProps = {
   locale: _enUS.default,
   ranges: [],
   focusedRange: [0, 0],
-  dateDisplayFormat: "MMM d, yyyy",
-  monthDisplayFormat: "MMM yyyy",
-  weekdayDisplayFormat: "E",
-  dayDisplayFormat: "d",
+  dateDisplayFormat: 'MMM d, yyyy',
+  monthDisplayFormat: 'MMM yyyy',
+  weekdayDisplayFormat: 'E',
+  dayDisplayFormat: 'd',
   showDateDisplay: true,
   showPreview: true,
-  displayMode: "date",
+  displayMode: 'date',
   months: 1,
-  color: "#3d91ff",
+  color: '#3d91ff',
   scroll: {
     enabled: false
   },
-  direction: "vertical",
+  direction: 'vertical',
   maxDate: (0, _addYears.default)(new Date(), 20),
   minDate: (0, _addYears.default)(new Date(), -100),
-  rangeColors: ["#3d91ff", "#3ecf8e", "#fed14c"],
-  startDatePlaceholder: "Early",
-  endDatePlaceholder: "Continuous",
+  rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
+  startDatePlaceholder: 'Early',
+  endDatePlaceholder: 'Continuous',
   editableDateInputs: false,
   dragSelectionEnabled: true,
   fixedHeight: false,
-  calendarFocus: "forwards",
+  calendarFocus: 'forwards',
   preventSnapRefocus: false,
   ariaLabels: {},
   isOpen: false
@@ -663,7 +668,7 @@ Calendar.propTypes = {
   className: _propTypes.default.string,
   showDateDisplay: _propTypes.default.bool,
   showPreview: _propTypes.default.bool,
-  displayMode: _propTypes.default.oneOf(["dateRange", "date"]),
+  displayMode: _propTypes.default.oneOf(['dateRange', 'date']),
   color: _propTypes.default.string,
   updateRange: _propTypes.default.func,
   scroll: _propTypes.default.shape({
@@ -674,7 +679,7 @@ Calendar.propTypes = {
     calendarWidth: _propTypes.default.number,
     calendarHeight: _propTypes.default.number
   }),
-  direction: _propTypes.default.oneOf(["vertical", "horizontal"]),
+  direction: _propTypes.default.oneOf(['vertical', 'horizontal']),
   startDatePlaceholder: _propTypes.default.string,
   endDatePlaceholder: _propTypes.default.string,
   navigatorRenderer: _propTypes.default.func,

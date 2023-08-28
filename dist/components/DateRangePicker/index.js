@@ -23,6 +23,9 @@ const DateRangePicker = props => {
   const dateRangeRef = (0, _react.useRef)();
   const [referenceElement, setReferenceElement] = (0, _react.useState)(null);
   const [popperElement, setPopperElement] = (0, _react.useState)(null);
+  const clickTrackRef = (0, _utils.useClickOutside)(() => {
+    setIsOpen(false);
+  });
   const {
     styles,
     attributes
@@ -31,6 +34,8 @@ const DateRangePicker = props => {
     modifiers: []
   });
   return /*#__PURE__*/_react.default.createElement("div", {
+    ref: clickTrackRef
+  }, /*#__PURE__*/_react.default.createElement("div", {
     className: (0, _classnames.default)(stylesRef.current.dateRangePickerWrapper, props.className)
   }, isOpen && /*#__PURE__*/_react.default.createElement("div", _extends({
     ref: setPopperElement,
@@ -49,12 +54,21 @@ const DateRangePicker = props => {
     editableDateInputs: true,
     className: undefined
   }, props, {
-    onVisibilityChange: visible => setIsOpen(visible),
+    isOpen: isOpen,
+    onVisibilityChange: visible => {
+      setIsOpen(visible);
+    },
     ref: dateRangeRef,
     inputRef: setReferenceElement
-  }))));
+  })))));
 };
-DateRangePicker.defaultProps = {};
+DateRangePicker.defaultProps = {
+  ranges: [{
+    startDate: undefined,
+    endDate: undefined,
+    key: 'selection'
+  }]
+};
 DateRangePicker.propTypes = {
   ..._DateRange.default.propTypes,
   ..._DefinedRange.default.propTypes,
