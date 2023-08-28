@@ -12,7 +12,7 @@ class DateRange extends Component {
     super(props, context);
     this.state = {
       focusedRange: props.initialFocusedRange || [findNextRangeIndex(props.ranges), 0],
-      preview: null,
+      preview: null
     };
     this.styles = generateStyles([coreStyles, props.classNames]);
   }
@@ -24,7 +24,7 @@ class DateRange extends Component {
       maxDate,
       moveRangeOnFirstSelection,
       retainEndDateOnFirstSelection,
-      disabledDates,
+      disabledDates
     } = this.props;
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
@@ -65,10 +65,10 @@ class DateRange extends Component {
       [startDate, endDate] = [endDate, startDate];
     }
 
-    const inValidDatesWithinRange = disabledDates.filter(disabledDate =>
+    const inValidDatesWithinRange = disabledDates.filter((disabledDate) =>
       isWithinInterval(disabledDate, {
         start: startDate,
-        end: endDate,
+        end: endDate
       })
     );
 
@@ -87,7 +87,7 @@ class DateRange extends Component {
     return {
       wasValid: !(inValidDatesWithinRange.length > 0),
       range: { startDate, endDate },
-      nextFocusRange: nextFocusRange,
+      nextFocusRange: nextFocusRange
     };
   };
   setSelection = (value, isSingleValue) => {
@@ -95,25 +95,25 @@ class DateRange extends Component {
     const focusedRange = this.props.focusedRange || this.state.focusedRange;
     const focusedRangeIndex = focusedRange[0];
     const selectedRange = ranges[focusedRangeIndex];
-    if (!selectedRange) return;
+    if (!selectedRange || !onChange) return;
     const newSelection = this.calcNewSelection(value, isSingleValue);
     onChange({
       [selectedRange.key || `range${focusedRangeIndex + 1}`]: {
         ...selectedRange,
-        ...newSelection.range,
-      },
+        ...newSelection.range
+      }
     });
     this.setState({
       focusedRange: newSelection.nextFocusRange,
-      preview: null,
+      preview: null
     });
     onRangeFocusChange && onRangeFocusChange(newSelection.nextFocusRange);
   };
-  handleRangeFocusChange = focusedRange => {
+  handleRangeFocusChange = (focusedRange) => {
     this.setState({ focusedRange });
     this.props.onRangeFocusChange && this.props.onRangeFocusChange(focusedRange);
   };
-  updatePreview = val => {
+  updatePreview = (val) => {
     if (!val) {
       this.setState({ preview: null });
       return;
@@ -129,15 +129,15 @@ class DateRange extends Component {
         focusedRange={this.state.focusedRange}
         onRangeFocusChange={this.handleRangeFocusChange}
         preview={this.state.preview}
-        onPreviewChange={value => {
+        onPreviewChange={(value) => {
           this.updatePreview(value ? this.calcNewSelection(value) : null);
         }}
         {...this.props}
         displayMode="dateRange"
         className={classnames(this.styles.dateRangeWrapper, this.props.className)}
         onChange={this.setSelection}
-        updateRange={val => this.setSelection(val, false)}
-        ref={target => {
+        updateRange={(val) => this.setSelection(val, false)}
+        ref={(target) => {
           this.calendar = target;
         }}
       />
@@ -151,7 +151,7 @@ DateRange.defaultProps = {
   moveRangeOnFirstSelection: false,
   retainEndDateOnFirstSelection: false,
   rangeColors: ['#3d91ff', '#3ecf8e', '#fed14c'],
-  disabledDates: [],
+  disabledDates: []
 };
 
 DateRange.propTypes = {

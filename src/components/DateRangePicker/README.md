@@ -15,7 +15,7 @@ const [state, setState] = useState([
 ]);
 
 <DateRangePicker
-  onChange={item => setState([item.selection])}
+  onChange={(item) => setState([item.selection])}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
@@ -39,7 +39,7 @@ const [state, setState] = useState([
 ]);
 
 <DateRangePicker
-  onChange={item => setState([item.selection])}
+  onChange={(item) => setState([item.selection])}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
@@ -70,7 +70,7 @@ const [state, setState] = useState({
 });
 
 <DateRangePicker
-  onChange={item => setState({ ...state, ...item })}
+  onChange={(item) => setState({ ...state, ...item })}
   months={1}
   minDate={addDays(new Date(), -300)}
   maxDate={addDays(new Date(), 900)}
@@ -95,7 +95,7 @@ const [state, setState] = useState([
 ]);
 
 <DateRangePicker
-  onChange={item => setState([item.selection])}
+  onChange={(item) => setState([item.selection])}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
@@ -105,7 +105,6 @@ const [state, setState] = useState([
   calendarFocus="backwards"
 />;
 ```
-
 
 #### Example: Multiple Range
 
@@ -133,7 +132,7 @@ const [state, setState] = useState({
 });
 
 <DateRangePicker
-  onChange={item => setState({ ...state, ...item })}
+  onChange={(item) => setState({ ...state, ...item })}
   ranges={[state.selection1, state.selection2, state.selection3]}
 />;
 ```
@@ -158,7 +157,7 @@ const [state, setState] = useState({
 });
 
 <DateRangePicker
-  onChange={item => setState({ ...state, ...item })}
+  onChange={(item) => setState({ ...state, ...item })}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
@@ -166,18 +165,19 @@ const [state, setState] = useState({
   direction="horizontal"
   ariaLabels={{
     dateInput: {
-      selection1: { startDate: "start date input of selction 1", endDate: "end date input of selction 1" },
-      selection2: { startDate: "start date input of selction 2", endDate: "end date input of selction 2" }
+      selection1: { startDate: 'start date input of selction 1', endDate: 'end date input of selction 1' },
+      selection2: { startDate: 'start date input of selction 2', endDate: 'end date input of selction 2' }
     },
-    monthPicker: "month picker",
-    yearPicker: "year picker",
-    prevButton: "previous month button",
-    nextButton: "next month button",
+    monthPicker: 'month picker',
+    yearPicker: 'year picker',
+    prevButton: 'previous month button',
+    nextButton: 'next month button'
   }}
 />;
 ```
 
 #### Example: Custom Day Cell Content
+
 Show orange dot only for weekend
 
 ```jsx inside Markdown
@@ -203,27 +203,27 @@ function customDayContent(day) {
     extraDot = (
       <div
         style={{
-          height: "5px",
-          width: "5px",
-          borderRadius: "100%",
-          background: "orange",
-          position: "absolute",
+          height: '5px',
+          width: '5px',
+          borderRadius: '100%',
+          background: 'orange',
+          position: 'absolute',
           top: 2,
-          right: 2,
+          right: 2
         }}
       />
-    )
+    );
   }
   return (
     <div>
       {extraDot}
-      <span>{format(day, "d")}</span>
+      <span>{format(day, 'd')}</span>
     </div>
-  )
+  );
 }
 
 <DateRangePicker
-  onChange={item => setState({ ...state, ...item })}
+  onChange={(item) => setState({ ...state, ...item })}
   showSelectionPreview={true}
   moveRangeOnFirstSelection={false}
   months={2}
@@ -232,20 +232,21 @@ function customDayContent(day) {
   dayContentRenderer={customDayContent}
   ariaLabels={{
     dateInput: {
-      selection1: { startDate: "start date input of selction 1", endDate: "end date input of selction 1" },
-      selection2: { startDate: "start date input of selction 2", endDate: "end date input of selction 2" }
+      selection1: { startDate: 'start date input of selction 1', endDate: 'end date input of selction 1' },
+      selection2: { startDate: 'start date input of selction 2', endDate: 'end date input of selction 2' }
     },
-    monthPicker: "month picker",
-    yearPicker: "year picker",
-    prevButton: "previous month button",
-    nextButton: "next month button",
+    monthPicker: 'month picker',
+    yearPicker: 'year picker',
+    prevButton: 'previous month button',
+    nextButton: 'next month button'
   }}
 />;
 ```
 
-
 #### Example: Restrict Date Selection
+
 Restricts access for range selection to (-30, +30) days of current date.
+
 ```jsx inside Markdown
 import { addDays } from 'date-fns';
 import { useState } from 'react';
@@ -264,7 +265,7 @@ const [state, setState] = useState({
 });
 
 <DateRangePicker
-  onChange={item => setState({ ...state, ...item })}
+  onChange={(item) => setState({ ...state, ...item })}
   months={1}
   minDate={addDays(new Date(), -30)}
   maxDate={addDays(new Date(), 30)}

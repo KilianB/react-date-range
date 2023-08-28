@@ -1,4 +1,5 @@
 import classnames from 'classnames';
+import React from 'react';
 import {
   startOfMonth,
   endOfMonth,
@@ -6,7 +7,7 @@ import {
   endOfWeek,
   differenceInCalendarDays,
   differenceInCalendarMonths,
-  addDays,
+  addDays
 } from 'date-fns';
 
 export function calcFocusDate(currentFocusedDate, props) {
@@ -17,12 +18,12 @@ export function calcFocusDate(currentFocusedDate, props) {
     const range = ranges[focusedRange[0]] || {};
     targetInterval = {
       start: range.startDate,
-      end: range.endDate,
+      end: range.endDate
     };
   } else {
     targetInterval = {
       start: date,
-      end: date,
+      end: date
     };
   }
   targetInterval.start = startOfMonth(targetInterval.start || new Date());
@@ -46,7 +47,7 @@ export function findNextRangeIndex(ranges, currentRangeIndex = -1) {
     (range, i) => i > currentRangeIndex && range.autoFocus !== false && !range.disabled
   );
   if (nextIndex !== -1) return nextIndex;
-  return ranges.findIndex(range => range.autoFocus !== false && !range.disabled);
+  return ranges.findIndex((range) => range.autoFocus !== false && !range.disabled);
 }
 
 export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
@@ -61,19 +62,47 @@ export function getMonthDisplayRange(date, dateOptions, fixedHeight) {
     start: startDateOfCalendar,
     end: endDateOfCalendar,
     startDateOfMonth,
-    endDateOfMonth,
+    endDateOfMonth
   };
 }
 
 export function generateStyles(sources) {
   if (!sources.length) return {};
   const generatedStyles = sources
-    .filter(source => Boolean(source))
+    .filter((source) => Boolean(source))
     .reduce((styles, styleSource) => {
-      Object.keys(styleSource).forEach(key => {
+      Object.keys(styleSource).forEach((key) => {
         styles[key] = classnames(styles[key], styleSource[key]);
       });
       return styles;
     }, {});
   return generatedStyles;
+}
+
+export function useClickOutside(cb) {
+  const ref = React.useRef(null);
+  const refCb = React.useRef(cb);
+
+  React.useLayoutEffect(() => {
+    refCb.current = cb;
+  });
+
+  React.useEffect(() => {
+    const handler = (e) => {
+      const element = ref.current;
+      if (element && !element.contains(e.target)) {
+        refCb.current(e);
+      }
+    };
+
+    document.addEventListener('mousedown', handler);
+    document.addEventListener('touchstart', handler);
+
+    return () => {
+      document.removeEventListener('mousedown', handler);
+      document.removeEventListener('touchstart', handler);
+    };
+  }, []);
+
+  return ref;
 }
