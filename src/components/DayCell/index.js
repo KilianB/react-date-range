@@ -87,8 +87,7 @@ class DayCell extends Component {
     if (!preview) return null;
     const startDate = preview.startDate ? endOfDay(preview.startDate) : null;
     const endDate = preview.endDate ? startOfDay(preview.endDate) : null;
-    const isInRange =
-      (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
+    const isInRange = (startDate && isAfter(day, startDate)) && (endDate && isBefore(day, endDate));
     const isStartEdge = !isInRange && isSameDay(day, startDate);
     const isEndEdge = !isInRange && isSameDay(day, endDate);
     return (
@@ -119,8 +118,7 @@ class DayCell extends Component {
       }
       startDate = startDate ? endOfDay(startDate) : null;
       endDate = endDate ? startOfDay(endDate) : null;
-      const isInRange =
-        (!startDate || isAfter(day, startDate)) && (!endDate || isBefore(day, endDate));
+      const isInRange = (startDate && isAfter(day, startDate)) && (endDate && isBefore(day, endDate));
       const isStartEdge = !isInRange && isSameDay(day, startDate);
       const isEndEdge = !isInRange && isSameDay(day, endDate);
       if (isInRange || isStartEdge || isEndEdge) {

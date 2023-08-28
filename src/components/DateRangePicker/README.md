@@ -80,6 +80,33 @@ const [state, setState] = useState({
 />;
 ```
 
+#### Example: No Default Date
+
+```jsx inside Markdown
+import { addDays } from 'date-fns';
+import { useState } from 'react';
+
+const [state, setState] = useState([
+  {
+    startDate: undefined,
+    endDate: undefined,
+    key: 'selection'
+  }
+]);
+
+<DateRangePicker
+  onChange={item => setState([item.selection])}
+  showSelectionPreview={true}
+  moveRangeOnFirstSelection={false}
+  months={2}
+  ranges={state}
+  direction="horizontal"
+  preventSnapRefocus={true}
+  calendarFocus="backwards"
+/>;
+```
+
+
 #### Example: Multiple Range
 
 ```jsx inside Markdown
