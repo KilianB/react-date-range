@@ -84,7 +84,7 @@ module.exports = {
         },
         {
           test: /\.css$/,
-          loader: 'style-loader!css-loader?modules',
+          use: ['style-loader']
         },
         {
           test: /\.svg$/,
@@ -92,6 +92,9 @@ module.exports = {
         },
       ],
     },
+    devServer:{
+      static: __dirname
+    }
   },
   pagePerSection: false,
   sections: [
